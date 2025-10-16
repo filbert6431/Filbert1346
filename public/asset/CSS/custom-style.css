@@ -1,0 +1,9 @@
+
+@font-face {
+    font-family: 'Filbert';
+    src: url('/asset/Font/Montserrat-Italic.ttf');
+}
+
+.font-Filbert {
+    font-family: 'Filbert';
+}

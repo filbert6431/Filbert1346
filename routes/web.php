@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -22,3 +24,13 @@ Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
 Route::get('/about', function () {
     return view('halaman-about');
 }) ->name("testing");
+
+route::get('/home', function() {
+return view('home');
+}) ->name("home");
+
+Route::post('question/store', [QuestionController::class, 'store'])
+		->name('question.store');
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+->name('dashboard');
