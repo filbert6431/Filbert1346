@@ -13,13 +13,23 @@ class CreateFirstUser extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+       public function run(): void
     {
-        User::create([
-            'name' => 'Admin',
-            'email' => 'Filbert7788@gmail.com',
-            'password' => Hash::make('password123'),
-        ]);
+        for ($i = 0; $i < 20; $i++) {
+
+            // Ambil gambar random dari internet
+            $img = Http::get("https://picsum.photos/300")->body();
+            $filename = 'profile-' . uniqid() . '.jpg';
+
+            Storage::put('public/profiles/' . $filename, $img);
+
+            User::create([
+                'name' => fake()->name(),
+                'email' => fake()->unique()->safeEmail(),
+                'password' => bcrypt('password'),
+                'profile_picture' => $filename,
+            ]);
+        }
     }
 
 

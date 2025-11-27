@@ -51,6 +51,7 @@
                             <table id="table-user" class="table table-centered table-nowrap mb-0 rounded">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th class="border-0">Foto</th>
                                         <th class="border-0">Name</th>
                                         <th class="border-0">Email</th>
                                         <th class="border-0">password</th>
@@ -60,20 +61,42 @@
                                 <tbody>
                                     @foreach ($dataUser as $item)
                                         <tr>
+                                            <td>
+                                                @if ($item->profile_picture)
+                                                    <img src="{{ asset('storage/' . $item->profile_picture) }}"
+                                                        alt="Foto" width="45" class="rounded-circle">
+                                                @else
+                                                    <span class="text-muted">No photo</span>
+                                                @endif
+                                            </td>
                                             <td>{{ $item->name }}</td>
                                             <td>{{ $item->email }}</td>
                                             <td>{{ $item->password }}</td>
                                             <td>
-                                                {{-- <td><a href="{{ route('user.edit', $item->pelanggan_id)
-                                                class="btn btn-info btn-sm"> --}}
-                                                <svg class="icon icon-xs me-2" data-slot="icon" fill="none"
-                                                    stroke-width="1.5" stroke="currentColor" viewBox="0 0 24 24"
-                                                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10">
-                                                    </path>
-                                                </svg>
-                                                Edit
+                                                {{-- SHOW BUTTON --}}
+                                                <a href="{{ route('profile.show', $item->id) }}"
+                                                    class="btn btn-secondary btn-sm">
+                                                    <svg class="icon icon-xs me-1" fill="none" stroke="currentColor"
+                                                        stroke-width="1.5" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M2.25 12s3.75-7.5 9.75-7.5 9.75 7.5 9.75 7.5-3.75 7.5-9.75 7.5S2.25 12 2.25 12Z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                                                    </svg>
+                                                    Show
+                                                </a>
+
+                                                {{-- EDIT BUTTON --}}
+                                                <a href="{{ route('user.edit', $item->id) }}"
+                                                    class="btn btn-info btn-sm text-white">
+                                                    <svg class="icon icon-xs me-1" fill="none" stroke-width="1.5"
+                                                        stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Z" />
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                    </svg>
+                                                    Edit
                                                 </a>
                                                 <form action="" method="POST" style="display:inline">
                                                     @csrf

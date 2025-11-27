@@ -56,6 +56,9 @@
 
         {{-- start main content --}}
         @yield('content')
+
+
+
         {{-- end main content --}}
         {{-- start js --}}
         <!-- Core -->
