@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PelangganController;
@@ -8,6 +9,8 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\MultipleUploadController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -56,47 +59,8 @@ Route::post('/uploads/store', [MultipleUploadController::class, 'store'])->name(
 Route::get('/pelanggan/{id}/files', [MultipleUploadController::class, 'showByPelanggan'])->name('pelanggan.files');
 Route::delete('/uploads/{id}', [MultipleUploadController::class, 'destroy'])->name('uploads.destroy');
 
-Route::get('/debug-files', function() {
-    echo "<h1>Debug File Storage</h1>";
+route::get('auth', [AuthController::class, 'index'])->name('auth');
 
-    // Cek public disk
-    echo "<h2>Public Disk Files:</h2>";
-    $publicFiles = \Storage::disk('public')->allFiles();
-    if (count($publicFiles) > 0) {
-        echo "<ul>";
-        foreach ($publicFiles as $file) {
-            echo "<li>" . $file . " | URL: " . \Storage::disk('public')->url($file) . "</li>";
-        }
-        echo "</ul>";
-    } else {
-        echo "<p>Tidak ada file di public disk</p>";
-    }
+route::post('auth/login', [AuthController::class, 'login'])->name('auth.login');
 
-    // Cek local disk
-    echo "<h2>Local Disk Files:</h2>";
-    $localFiles = \Storage::allFiles();
-    if (count($localFiles) > 0) {
-        echo "<ul>";
-        foreach ($localFiles as $file) {
-            echo "<li>" . $file . " | Path: " . storage_path('app/' . $file) . "</li>";
-        }
-        echo "</ul>";
-    } else {
-        echo "<p>Tidak ada file di local disk</p>";
-    }
-
-    // Cek file dari database
-    echo "<h2>Files dari Database:</h2>";
-    $dbFiles = \App\Models\Multipleupload::all();
-    if (count($dbFiles) > 0) {
-        echo "<ul>";
-        foreach ($dbFiles as $file) {
-            $existsPublic = \Storage::disk('public')->exists('uploads/' . $file->filename) ? 'YES' : 'NO';
-            $existsLocal = \Storage::exists('public/uploads/' . $file->filename) ? 'YES' : 'NO';
-            echo "<li>" . $file->filename . " | Public: " . $existsPublic . " | Local: " . $existsLocal . "</li>";
-        }
-        echo "</ul>";
-    } else {
-        echo "<p>Tidak ada file di database</p>";
-    }
-});
+route::get('auth.logout', [AuthController::class, 'logout'])->name('auth.logout');

@@ -5,11 +5,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Models\pelanggan;
 
 class ProfileController extends Controller
 {
     // Show the edit profile form
-   public function edit($id)
+public function show($id) {
+    $pelanggan = pelanggan::findOrFail($id);
+    $files = \App\Models\MultipleUpload::where('ref_table', 'pelanggan')
+    ->where('ref_id', $id)
+    ->get();
+
+    return view('admin.pelanggan.index', compact('pelanggan', 'files'));  }
+
+
+    public function edit($id)
 {
     $user = User::findOrFail($id);
     return view('user.edit', compact('user'));

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -54,7 +55,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $dataUsaer = User::findOrFail($id);
+        $dataUser = User::findOrFail($id);
 
         $request->validate([
             'name' => 'required',

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Multipleupload;
 use App\Models\pelanggan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class MultipleUploadController extends Controller
 {
@@ -65,8 +67,8 @@ class MultipleUploadController extends Controller
         $file = Multipleupload::findOrFail($id);
 
         // Hapus file dari storage
-        if (\Storage::exists('public/uploads/' . $file->filename)) {
-            \Storage::delete('public/uploads/' . $file->filename);
+        if (Storage::exists('public/uploads/' . $file->filename)) {
+            Storage::delete('public/uploads/' . $file->filename);
         }
 
         // Hapus record dari database
